@@ -38,9 +38,7 @@ void tryCharacter(string in, string floating, set<string>& sol, int blank_index,
         string newWord_lower, newWord_upper;
         newWord_lower = newWord_upper = in;
         newWord_lower[blank_index] = letters[letter];
-        newWord_upper[blank_index] = toupper(letters[letter]);
         generatePossibleSol(newWord_lower, floating, sol, dict);
-        generatePossibleSol(newWord_upper, floating, sol, dict);
         letter++;
         tryCharacter(in, floating, sol, blank_index, letter, dict);
     }
