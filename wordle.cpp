@@ -36,9 +36,12 @@ void tryCharacter(string in, string floating, int blank_index, int letter, const
     if(letter == 26){
         return;
     }else{
-        string newWord = in;
-        newWord[blank_index] = letters[letter];
-        generatePossibleSol(newWord, floating, dict);
+        string newWord_lower, newWord_upper;
+        newWord_lower = newWord_upper = in;
+        newWord_lower[blank_index] = letters[letter];
+        newWord_upper[blank_index] = toupper(letters[letter]);
+        generatePossibleSol(newWord_lower, floating, dict);
+        generatePossibleSol(newWord_upper, floating, dict);
         letter++;
         tryCharacter(in, floating, blank_index, letter, dict);
     }
