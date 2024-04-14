@@ -12,10 +12,9 @@
 using namespace std;
 
 char letters[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-std::set<std::string> sol;
 // Add prototypes of helper functions here
-void tryCharacter(string, string, int, int, const std::set<std::string>& );
-void generatePossibleSol(string, string, const std::set<std::string>& );
+void tryCharacter(string, string, set<string>&, int, int, const std::set<std::string>& );
+void generatePossibleSol(string, string, set<string>&, const std::set<std::string>& );
 bool floatingCheck(string in, string floating);
 
 // Definition of primary wordle function
@@ -25,14 +24,14 @@ std::set<std::string> wordle(
     const std::set<std::string>& dict)
 {
     // Add your code here
-    generatePossibleSol(in, floating, dict);
-
+    std::set<std::string> sol;
+    generatePossibleSol(in, floating, sol, dict);
     return sol;
 
 }
 
 // Define any helper functions here
-void tryCharacter(string in, string floating, int blank_index, int letter, const std::set<std::string>& dict){
+void tryCharacter(string in, string floating, set<string>& sol, int blank_index, int letter, const std::set<std::string>& dict){
     if(letter == 26){
         return;
     }else{
@@ -40,17 +39,17 @@ void tryCharacter(string in, string floating, int blank_index, int letter, const
         newWord_lower = newWord_upper = in;
         newWord_lower[blank_index] = letters[letter];
         newWord_upper[blank_index] = toupper(letters[letter]);
-        generatePossibleSol(newWord_lower, floating, dict);
-        generatePossibleSol(newWord_upper, floating, dict);
+        generatePossibleSol(newWord_lower, floating, sol, dict);
+        generatePossibleSol(newWord_upper, floating, sol, dict);
         letter++;
-        tryCharacter(in, floating, blank_index, letter, dict);
+        tryCharacter(in, floating, sol, blank_index, letter, dict);
     }
 }
 
-void generatePossibleSol(string in, string floating, const std::set<std::string>& dict){
+void generatePossibleSol(string in, string floating,  set<string>& sol, const std::set<std::string>& dict){
     for(int i=0; i<in.length(); i++){
         if(in[i] == '-'){
-            tryCharacter(in, floating, i, 0, dict);
+            tryCharacter(in, floating, sol, i, 0, dict);
         }
     }
     if(dict.find(in) != dict.end() and floatingCheck(in, floating)){
