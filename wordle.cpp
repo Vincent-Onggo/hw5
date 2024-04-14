@@ -60,6 +60,7 @@ bool floatingCheck(string in, string floating){
         bool containsLetter = false;
         for(int j=0; j<in.length(); j++){
             if(in[j] == floating[i]){
+                in[j] = ' ';
                 containsLetter = true;
             }
         }
